@@ -1,0 +1,55 @@
+-- MySQL dump 10.13  Distrib 5.5.52, for Win64 (x86)
+--
+-- Host: localhost    Database: dotnetplugin
+-- ------------------------------------------------------
+-- Server version	5.5.52
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `menu`
+--
+
+DROP TABLE IF EXISTS `menu`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `menu` (
+  `ID` varchar(50) NOT NULL DEFAULT '',
+  `Name` varchar(100) DEFAULT NULL,
+  `parentid` varchar(50) DEFAULT NULL,
+  `sort` varchar(10) DEFAULT NULL,
+  `icon` varchar(50) DEFAULT NULL,
+  `url` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `menu`
+--
+
+LOCK TABLES `menu` WRITE;
+/*!40000 ALTER TABLE `menu` DISABLE KEYS */;
+INSERT INTO `menu` VALUES ('1f053a91-f720-11e6-a5a1-0021cc65b235','分页操作','c2eeb8fd-f71c-11e6-854c-0021cc65b235','12',NULL,NULL),('3a9ad700-f727-11e6-a5a1-0021cc65b235','系统管理','','2',NULL,NULL),('570bdbd7-f727-11e6-a5a1-0021cc65b235','菜单管理','3a9ad700-f727-11e6-a5a1-0021cc65b235','21',NULL,NULL),('5fd22228-f71f-11e6-a5a1-0021cc65b235','递归操作','c2eeb8fd-f71c-11e6-854c-0021cc65b235','11',NULL,NULL),('b5358ced-f71f-11e6-a5a1-0021cc65b235','递归文档操作','5fd22228-f71f-11e6-a5a1-0021cc65b235','111',NULL,NULL),('c2eeb8fd-f71c-11e6-854c-0021cc65b235','功能管理','','1',NULL,NULL),('dfb992a1-f71f-11e6-a5a1-0021cc65b235','递归树形结构','5fd22228-f71f-11e6-a5a1-0021cc65b235','112',NULL,NULL);
+/*!40000 ALTER TABLE `menu` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2017-02-20 17:40:51

@@ -151,18 +151,25 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\TreeDocumentController.cs" />
+    <Compile Include="Controllers\TreeDocumentDataController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\autoc.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="img\glyphicons-halflings.png" />
+    <Content Include="Scripts\autoc.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -191,13 +198,12 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\TreeDocument\TreeDocument.cshtml" />
+    <Content Include="SQL\dotnetplugin" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -213,6 +219,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PluginDevelopment.DAL\PluginDevelopment.DAL.csproj">
+      <Project>{99e34b54-246d-4a8a-a6f5-c93c0c6a7439}</Project>
+      <Name>PluginDevelopment.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PluginDevelopment.Helper\PluginDevelopment.Helper.csproj">
+      <Project>{9882e6fe-d805-4fcf-86ac-e1c88fa733ca}</Project>
+      <Name>PluginDevelopment.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PluginDevelopment.Model\PluginDevelopment.Model.csproj">
+      <Project>{98d12aef-8021-41fb-b288-9d46c85d39bc}</Project>
+      <Name>PluginDevelopment.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

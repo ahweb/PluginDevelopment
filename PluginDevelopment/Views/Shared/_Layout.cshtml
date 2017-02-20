@@ -1,10 +1,10 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - 我的 ASP.NET 应用程序</title>
+    <title>ASP.NET MVC插件开发</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -17,24 +17,103 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("应用程序名称", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("主页", "Index", "Home")</li>
-                    <li>@Html.ActionLink("关于", "About", "Home")</li>
-                    <li>@Html.ActionLink("联系方式", "Contact", "Home")</li>
-                </ul>
+                <span class="navbar-brand" style="font-size: 25px;">ASP.NET MVC插件开发</span>
             </div>
         </div>
     </div>
     <div class="container body-content">
-        @RenderBody()
-       
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-md-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading" style="font-size: 18px;">功能操作</div>
+                    <div class="panel-body">
+                        @*<div id="div_menu">
+                                <ul class="nav nav-list" id="ul_menu"></ul>
+                                <div class="sidebar-collapse" id="sidebar-collapse">
+                                    <span class="glyphicon glyphicon-chevron-left" data-icon1="glyphicon glyphicon-chevron-left"
+                                          data-icon2="glyphicon glyphicon-chevron-right"></span>
+                                </div>
+                            </div>*@
+                        <div class="tree well">
+                            <ul id="rootUL"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    <ol class="breadcrumb">
+                        <li class="active"><a href="#">首页</a></li>
+                    </ol>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
     </div>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+<script type="text/javascript">
+    var menus;
+    $(document).ready(function () {
+        loadMenu();
+    });
+
+    var loadMenu = function () {
+        $.ajax({
+            type: "Get",
+            dataType: "json",
+            url: "/api/Menu",
+            contentType: "application/json; charset=utf-8",
+            async: false,
+            success: function (msg) {
+                if (typeof msg === 'string') {
+                    menus = JSON.parse(msg);
+                }
+                tree(menus);
+            },
+            error: function (err) {
+                var obj = JSON.parse(err.responseText);
+                alert(obj.Message);
+            }
+        });
+
+         function tree(data) {
+            for (var i = 0; i < data.length; i++) {
+                var data2 = data[i];
+                var children;
+                if (data[i].Icon === "icon-th") {
+                    $("#rootUL").append("<li data-name='" + data[i].Id + "'><span><i class='" + data[i].Icon + "'></i> " + data[i].Name + "</span></li>");
+                } else {
+                    children = $("li[data-name='" + data[i].parentId + "']").children("ul");
+                    if (children.length === 0) {
+                        $("li[data-name='" + data[i].parentId + "']").append("<ul></ul>");
+                    }
+                    $("li[data-name='" + data[i].parentId + "'] > ul").append(
+                        "<li data-name='" + data[i].Id + "'>" +"<span>" +
+                        "<i class='" + data[i].Icon + "'></i> " +
+                        data[i].Name + "</span>" +"</li>");
+                }
+                for (var j = 0; j < data[i].Children.length; j++) {
+                    var child = data[i].Children[j];
+                    children = $("li[data-name='" + child.parentId + "']").children("ul");
+                    if (children.length === 0) {
+                        $("li[data-name='" + child.parentId + "']").append("<ul></ul>");
+                    }
+                    $("li[data-name='" + child.parentId + "'] > ul").append(
+                        "<li data-name='" + child.Id + "'>" +"<span>" +
+                        "<i class='" + child.Icon + "'></i> " +child.Name +
+                        "</span>" +"</li>");
+                    var child2 = data[i].Children[j].child;
+                    tree(child2);
+                }
+                tree(data[i]);
+            }
+        };
+    };
+</script>
 </body>
 </html>

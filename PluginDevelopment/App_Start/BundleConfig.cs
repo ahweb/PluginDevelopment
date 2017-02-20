@@ -1,11 +1,9 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace PluginDevelopment
 {
     public class BundleConfig
     {
-        // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
@@ -14,8 +12,10 @@ namespace PluginDevelopment
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
-            // 使用要用于开发和学习的 Modernizr 的开发版本。然后，当你做好
-            // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
+            //添加AnchorJS文档操作js插件
+            bundles.Add(new ScriptBundle("~/bundles/autocjs").Include(
+                "~/Scripts/autoc.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
@@ -25,7 +25,9 @@ namespace PluginDevelopment
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/autoc.css",
+                      "~/Content/style.css"));
         }
     }
 }
