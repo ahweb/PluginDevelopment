@@ -6,10 +6,10 @@ using System.Web.Mvc;
 
 namespace PluginDevelopment.Controllers
 {
-    public class TreeDocumentController : Controller
+    public class RichTextEditorController : Controller
     {
-        // GET: TreeDocument
-        public ActionResult TreeDocument()
+        // GET: RichTextEditor
+        public ActionResult RichTextEditor()
         {
             return View();
         }

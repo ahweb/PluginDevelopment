@@ -19,7 +19,14 @@ namespace PluginDevelopment
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
+            //添加富文本编辑器
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                      "~/Scripts/ueditor.config.js",
+                      "~/Scripts/ueditor.all.js",
+                      "~/Scripts/ueditor.parse.js",
+                      "~/Scripts/zh-cn.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/textedit").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
