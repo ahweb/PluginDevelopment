@@ -10,7 +10,7 @@ using PluginDevelopment.Model;
 
 namespace PluginDevelopment.DAL
 {
-   public class MenuOperation
+    public class MenuOperation
     {
         private static readonly DbBase Dbbase = new DbBase("DefaultConnectionString");
 
@@ -42,14 +42,14 @@ namespace PluginDevelopment.DAL
         /// </summary>
         /// <param name="menus">查询得到的菜单集合</param>
         /// <param name="menu">父节点为空的集合</param>
-       public static void FeatchMenuChildren(IList<Menu> menus, Menu menu)
-       {
-           menu.Children=new Collection<Menu>(menus.Where(x=>x.ParentId.Equals(menu.Id)).ToList());
-           if (!menu.Children.Any()) return;
-           foreach (var childMenu in menu.Children)
-           {
-               FeatchMenuChildren(menus, childMenu);
-           }
-       }
+        public static void FeatchMenuChildren(IList<Menu> menus, Menu menu)
+        {
+            menu.Children = new Collection<Menu>(menus.Where(x => x.ParentId.Equals(menu.Id)).ToList());
+            if (!menu.Children.Any()) return;
+            foreach (var childMenu in menu.Children)
+            {
+                FeatchMenuChildren(menus, childMenu);
+            }
+        }
     }
 }

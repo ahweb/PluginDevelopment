@@ -23,24 +23,17 @@
     </div>
     <div class="container body-content">
         <div class="row" style="margin-top: 10px;">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="panel panel-primary">
                     <div class="panel-heading" style="font-size: 18px;">功能操作</div>
                     <div class="panel-body">
-                        @*<div id="div_menu">
-                                <ul class="nav nav-list" id="ul_menu"></ul>
-                                <div class="sidebar-collapse" id="sidebar-collapse">
-                                    <span class="glyphicon glyphicon-chevron-left" data-icon1="glyphicon glyphicon-chevron-left"
-                                          data-icon2="glyphicon glyphicon-chevron-right"></span>
-                                </div>
-                            </div>*@
                         <div class="tree well">
                             <ul id="rootUL"></ul>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <div class="row">
                     <ol class="breadcrumb">
                         <li class="active"><a href="#">首页</a></li>
@@ -55,65 +48,81 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-
-<script type="text/javascript">
-    var menus;
-    $(document).ready(function () {
-        loadMenu();
-    });
-
-    var loadMenu = function () {
-        $.ajax({
-            type: "Get",
-            dataType: "json",
-            url: "/api/Menu",
-            contentType: "application/json; charset=utf-8",
-            async: false,
-            success: function (msg) {
-                if (typeof msg === 'string') {
-                    menus = JSON.parse(msg);
-                }
-                tree(menus);
-            },
-            error: function (err) {
-                var obj = JSON.parse(err.responseText);
-                alert(obj.Message);
-            }
+    <script type="text/javascript">
+        var menus;
+        $(document).ready(function () {
+            loadMenu();
+            menuOperation();
         });
 
-         function tree(data) {
+        //加载系统菜单
+        var loadMenu = function () {
+            $.ajax({
+                type: "Get",
+                dataType: "json",
+                url: "/api/Menu",
+                contentType: "application/json; charset=utf-8",
+                async: false,
+                success: function (msg) {
+                    if (typeof msg === 'string') {
+                        menus = JSON.parse(msg);
+                    }
+                    tree(menus);
+                },
+                error: function (err) {
+                    var obj = JSON.parse(err.responseText);
+                    alert(obj.Message);
+                }
+            });
+        }
+
+        function tree(data) {
             for (var i = 0; i < data.length; i++) {
-                var data2 = data[i];
                 var children;
                 if (data[i].Icon === "icon-th") {
-                    $("#rootUL").append("<li data-name='" + data[i].Id + "'><span><i class='" + data[i].Icon + "'></i> " + data[i].Name + "</span></li>");
+                    $("#rootUL").append("<li data-name='" + data[i].Id + "'><span><i class=\'glyphicons-halflings " + data[i].Icon + "'></i> " + data[i].Name + "</span></li>");
                 } else {
-                    children = $("li[data-name='" + data[i].parentId + "']").children("ul");
+                    children = $("li[data-name='" + data[i].ParentId + "']").children("ul");
                     if (children.length === 0) {
-                        $("li[data-name='" + data[i].parentId + "']").append("<ul></ul>");
+                        $("li[data-name='" + data[i].ParentId + "']").append("<ul></ul>");
                     }
-                    $("li[data-name='" + data[i].parentId + "'] > ul").append(
-                        "<li data-name='" + data[i].Id + "'>" +"<span>" +
+                    $("li[data-name='" + data[i].ParentId + "'] > ul").append(
+                        "<li data-name='" + data[i].Id + "'>" + "<span>" +
                         "<i class='" + data[i].Icon + "'></i> " +
-                        data[i].Name + "</span>" +"</li>");
+                        data[i].Name + "</span>" + "</li>");
                 }
                 for (var j = 0; j < data[i].Children.length; j++) {
                     var child = data[i].Children[j];
-                    children = $("li[data-name='" + child.parentId + "']").children("ul");
+                    children = $("li[data-name='" + child.ParentId + "']").children("ul");
                     if (children.length === 0) {
-                        $("li[data-name='" + child.parentId + "']").append("<ul></ul>");
+                        $("li[data-name='" + child.ParentId + "']").append("<ul></ul>");
                     }
-                    $("li[data-name='" + child.parentId + "'] > ul").append(
-                        "<li data-name='" + child.Id + "'>" +"<span>" +
-                        "<i class='" + child.Icon + "'></i> " +child.Name +
-                        "</span>" +"</li>");
-                    var child2 = data[i].Children[j].child;
+                    $("li[data-name='" + child.ParentId + "'] > ul").append(
+                        "<li data-name='" + child.Id + "'>" + "<span>" +
+                        "<i class='" + child.Icon + "'></i> " +
+                        child.Name + "</span>" + "</li>");
+                    var child2 = data[i].Children[j].Children;
                     tree(child2);
                 }
                 tree(data[i]);
             }
         };
-    };
-</script>
+
+        //菜单操作
+        var menuOperation = function () {
+            $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', '关闭');
+            $('.tree li.parent_li > span').on('click', function (e) {
+                var children = $(this).parent('li.parent_li').find(' > ul > li');
+                if (children.is(":visible")) {
+                    children.hide('fast');
+                    $(this).attr('title', '展开').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
+                } else {
+                    children.show('fast');
+                    $(this).attr('title', '关闭').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
+                }
+                e.stopPropagation();
+            });
+        };
+    </script>
 </body>
 </html>
