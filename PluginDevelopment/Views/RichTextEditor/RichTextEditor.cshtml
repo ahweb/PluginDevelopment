@@ -24,8 +24,28 @@
 </div>
 @section scripts{
     <script type="text/javascript">
-        var ue = UE.getEditor('containerEdit');
+        var ue;
+        ue = UE.getEditor('containerEdit', {
+            //设置编辑器的配置
+            autoHeight: false
+        });
 
+        ue.ready(function() {
+            //设置编辑器的内容
+            ue.setContent('hello');
+            //获取html内容，返回: <p>hello</p>
+            var html = ue.getContent();
+            //获取纯文本内容，返回: hello
+            var txt = ue.getContentTxt();
+        });
+
+        $(document).ready(function() {
+            ue.ready(function() {
+                ue.setContent(function() {
+                    
+                });
+            });
+        });
     </script>
 
 }
