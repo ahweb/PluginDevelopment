@@ -158,6 +158,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MapDataController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\OAuthController.cs" />
     <Compile Include="Controllers\RichTextEditorController.cs" />
     <Compile Include="Controllers\RichTextEditorDataController.cs" />
     <Compile Include="Controllers\UploadDataController.cs" />
