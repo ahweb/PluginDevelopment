@@ -1,0 +1,25 @@
+﻿
+<input type="file" id="filePicture" name="filePicture" accept=".jpg,.jpeg,.png,.bmp" onchange="filePictureChange()" />
+
+@section scripts{
+    <script type="text/javascript">
+        var filePictureChange = function () {
+            $.ajaxFileUpload({
+                url: "/api/UploadData", //用于文件上传的服务器端请求地址
+                type: "Post",
+                secureuri: false, //一般设置为false
+                fileElementId: "filePicture", //文件上传空间的id属性
+                dataType: "json", //返回值类型 一般设置为json
+                success: function (data, status) {  //服务器成功响应处理函数
+                    alert(data.fileName);
+                    alert(data.filePath);
+                    alert(data.fileSize);
+                },
+                error: function (data, status, e) {  //服务器响应失败处理函数
+                    alert(e);
+                }
+            });
+        };
+    </script>
+    
+}

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PluginDevelopment.Model;
 
-namespace PluginDevelopment.DAL
+namespace PluginDevelopment.BLL
 {
-    class MapOperation
+    public interface IUserService : IBaseService<user>
     {
     }
 }

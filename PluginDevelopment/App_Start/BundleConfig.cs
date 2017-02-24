@@ -30,11 +30,17 @@ namespace PluginDevelopment
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            //文件上传
+            bundles.Add(new ScriptBundle("~/bundles/file").Include(
+                      "~/Content/uploadify/jquery.uploadify-3.1.min.js",
+                      "~/Scripts/ajaxFileUpload.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/autoc.css",
-                      "~/Content/style.css"));
+                      "~/Content/style.css",
+                      "~/Content/uploadify/uploadify.css"));
         }
     }
 }

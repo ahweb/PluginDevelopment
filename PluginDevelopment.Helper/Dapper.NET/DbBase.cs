@@ -1,30 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Common;
-using System.Linq;
-using System.Text;
 
-namespace DapperForNet
+namespace PluginDevelopment.Helper.Dapper.NET
 {
     public class DbBase : IDisposable
     {
-        private string paramPrefix = "@";
+        private string _paramPrefix = "@";
 
-        private string providerName = "System.Data.SqlClient";
+        private readonly string _providerName = "MySql.Data.MySqlClient";
 
-        private IDbConnection dbConnecttion;
+        private readonly IDbConnection _dbConnecttion;
 
-        private DbProviderFactory dbFactory;
+        private readonly DbProviderFactory _dbFactory;
 
-        private DBType _dbType = DBType.SqlServer;
+        private DBType _dbType = DBType.MySql;
 
         public IDbConnection DbConnecttion
         {
             get
             {
-                return dbConnecttion;
+                return _dbConnecttion;
             }
         }
 
@@ -32,7 +29,7 @@ namespace DapperForNet
         {
             get
             {
-                return dbConnecttion.BeginTransaction();
+                return _dbConnecttion.BeginTransaction();
             }
         }
 
@@ -40,7 +37,7 @@ namespace DapperForNet
         {
             get
             {
-                return paramPrefix;
+                return _paramPrefix;
             }
         }
 
@@ -48,7 +45,7 @@ namespace DapperForNet
         {
             get
             {
-                return providerName;
+                return _providerName;
             }
         }
 
@@ -66,25 +63,30 @@ namespace DapperForNet
             {
                 var connStr = ConfigurationManager.ConnectionStrings[connectionStringName].ConnectionString;
                 if (!string.IsNullOrEmpty(ConfigurationManager.ConnectionStrings[connectionStringName].ProviderName))
-                    providerName = ConfigurationManager.ConnectionStrings[connectionStringName].ProviderName;
+                {
+                    _providerName = ConfigurationManager.ConnectionStrings[connectionStringName].ProviderName;
+                }
                 else
+                {
                     throw new Exception("ConnectionStrings中没有配置提供程序ProviderName！");
-                dbFactory = DbProviderFactories.GetFactory(providerName);
-                dbConnecttion = dbFactory.CreateConnection();
-                dbConnecttion.ConnectionString = connStr;
-                dbConnecttion.Open();
+                }                   
+                _dbFactory = DbProviderFactories.GetFactory(_providerName);
+                _dbConnecttion = _dbFactory.CreateConnection();
+                if (_dbConnecttion == null) return;
+                _dbConnecttion.ConnectionString = connStr;
+                _dbConnecttion.Open();
                 SetParamPrefix();
             }
             catch (Exception ex)    
             {
-                throw;
+                throw ex;
             }
         }
 
 
         private void SetParamPrefix()
         {
-            string dbtype = (dbFactory == null ? dbConnecttion.GetType() : dbFactory.GetType()).Name;
+            string dbtype = (_dbFactory == null ? _dbConnecttion.GetType() : _dbFactory.GetType()).Name;
             // 使用类型名判断
             if (dbtype.StartsWith("MySql")) _dbType = DBType.MySql;
             else if (dbtype.StartsWith("SqlCe")) _dbType = DBType.SqlServerCE;
@@ -94,31 +96,29 @@ namespace DapperForNet
             else if (dbtype.StartsWith("System.Data.SqlClient.")) _dbType = DBType.SqlServer;
             else if (dbtype.StartsWith("OleDb")) _dbType = DBType.Access;
             // else try with provider name
-            else if (providerName.IndexOf("MySql", StringComparison.InvariantCultureIgnoreCase) >= 0) _dbType = DBType.MySql;
-            else if (providerName.IndexOf("SqlServerCe", StringComparison.InvariantCultureIgnoreCase) >= 0) _dbType = DBType.SqlServerCE;
-            else if (providerName.IndexOf("Npgsql", StringComparison.InvariantCultureIgnoreCase) >= 0) _dbType = DBType.PostgreSQL;
-            else if (providerName.IndexOf("Oracle", StringComparison.InvariantCultureIgnoreCase) >= 0) _dbType = DBType.Oracle;
-            else if (providerName.IndexOf("SQLite", StringComparison.InvariantCultureIgnoreCase) >= 0) _dbType = DBType.SQLite;
-            else if (providerName.IndexOf("OleDb", StringComparison.InvariantCultureIgnoreCase) >= 0) _dbType = DBType.Access;
+            else if (_providerName.IndexOf("MySql", StringComparison.InvariantCultureIgnoreCase) >= 0) _dbType = DBType.MySql;
+            else if (_providerName.IndexOf("SqlServerCe", StringComparison.InvariantCultureIgnoreCase) >= 0) _dbType = DBType.SqlServerCE;
+            else if (_providerName.IndexOf("Npgsql", StringComparison.InvariantCultureIgnoreCase) >= 0) _dbType = DBType.PostgreSQL;
+            else if (_providerName.IndexOf("Oracle", StringComparison.InvariantCultureIgnoreCase) >= 0) _dbType = DBType.Oracle;
+            else if (_providerName.IndexOf("SQLite", StringComparison.InvariantCultureIgnoreCase) >= 0) _dbType = DBType.SQLite;
+            else if (_providerName.IndexOf("OleDb", StringComparison.InvariantCultureIgnoreCase) >= 0) _dbType = DBType.Access;
 
-            if (_dbType == DBType.MySql && dbConnecttion != null && dbConnecttion.ConnectionString != null && dbConnecttion.ConnectionString.IndexOf("Allow User Variables=true") >= 0)
-                paramPrefix = "?";
+            if (_dbType == DBType.MySql && _dbConnecttion != null && _dbConnecttion.ConnectionString != null && _dbConnecttion.ConnectionString.IndexOf("Allow User Variables=true") >= 0)
+                _paramPrefix = "?";
             if (_dbType == DBType.Oracle)
-                paramPrefix = ":";
+                _paramPrefix = ":";
         }
 
         public void Dispose()
         {
-            if (dbConnecttion != null)
+            if (_dbConnecttion == null) return;
+            try
             {
-                try
-                {
-                    dbConnecttion.Dispose();
-                }
-                catch(Exception ex)
-                {
-                    throw;
-                }
+                _dbConnecttion.Dispose();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
             }
         }
     }

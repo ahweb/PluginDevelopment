@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DapperForNet;
+using Dapper;
 using Newtonsoft.Json;
+using PluginDevelopment.Helper;
+using PluginDevelopment.Helper.Dapper.NET;
 using PluginDevelopment.Model;
 
 namespace PluginDevelopment.DAL

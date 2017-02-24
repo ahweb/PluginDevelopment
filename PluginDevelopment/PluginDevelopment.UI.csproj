@@ -160,6 +160,8 @@
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\RichTextEditorController.cs" />
     <Compile Include="Controllers\RichTextEditorDataController.cs" />
+    <Compile Include="Controllers\UploadDataController.cs" />
+    <Compile Include="Controllers\UploadifyController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -170,11 +172,17 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\uploadify\jquery.uploadify-3.1.js" />
+    <Content Include="Content\uploadify\jquery.uploadify-3.1.min.js" />
+    <Content Include="Content\uploadify\uploadify-cancel.png" />
+    <Content Include="Content\uploadify\uploadify.css" />
+    <Content Include="Content\uploadify\uploadify.swf" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="img\glyphicons-halflings.png" />
+    <Content Include="Scripts\ajaxFileUpload.js" />
     <Content Include="Scripts\autoc.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -249,6 +257,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="SQL\dotnetplugin" />
     <Content Include="Views\RichTextEditor\RichTextEditor.cshtml" />
+    <Content Include="Views\Uploadify\Index.cshtml" />
+    <Content Include="Views\Uploadify\AjaxFileUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -269,6 +279,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PluginDevelopment.BLL\PluginDevelopment.BLL.csproj">
+      <Project>{274A0B18-EF07-4B01-862D-0113703A6B12}</Project>
+      <Name>PluginDevelopment.BLL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PluginDevelopment.DAL\PluginDevelopment.DAL.csproj">
       <Project>{99e34b54-246d-4a8a-a6f5-c93c0c6a7439}</Project>
       <Name>PluginDevelopment.DAL</Name>

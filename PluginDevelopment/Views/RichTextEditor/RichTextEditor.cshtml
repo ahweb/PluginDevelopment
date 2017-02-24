@@ -19,31 +19,45 @@
 </div>
 <div class="row">
     <div class="col-md-12" style="margin-top: 10px;">
-        <script id="containerEdit" type="text/plain" style="width: auto;height:500px;"></script>
+        <script id="containerEdit" type="text/plain" style="width: auto;height:500px;">
+        </script>
     </div>
 </div>
 @section scripts{
     <script type="text/javascript">
         var ue;
+        var content;
         ue = UE.getEditor('containerEdit', {
             //设置编辑器的配置
-            autoHeight: false
+
         });
 
-        ue.ready(function() {
+        ue.ready(function () {
             //设置编辑器的内容
-            ue.setContent('hello');
+            ue.setContent('ww');
             //获取html内容，返回: <p>hello</p>
             var html = ue.getContent();
             //获取纯文本内容，返回: hello
             var txt = ue.getContentTxt();
         });
 
-        $(document).ready(function() {
-            ue.ready(function() {
-                ue.setContent(function() {
-                    
-                });
+        $(document).ready(function () {
+            $.ajax({
+                type: "Get",
+                dataType: "json",
+                url: "/api/Menu",
+                contentType: "application/json; charset=utf-8",
+                async: false,
+                success: function (msg) {
+                    if (typeof msg === 'string') {
+                        content = JSON.parse(msg);
+                    }
+
+                },
+                error: function (err) {
+                    var obj = JSON.parse(err.responseText);
+                    alert(obj.Message);
+                }
             });
         });
     </script>

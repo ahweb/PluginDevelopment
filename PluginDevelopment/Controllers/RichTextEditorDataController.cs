@@ -9,5 +9,9 @@ namespace PluginDevelopment.Controllers
 {
     public class RichTextEditorDataController : ApiController
     {
+        //public  string GetRichTest()
+        //{
+
+        //}
     }
 }

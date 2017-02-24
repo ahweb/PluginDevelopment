@@ -1,0 +1,84 @@
+﻿
+
+<div>
+    <div id="fileQueue">
+    </div>
+    <input type="file" id="file_upload" name="file_upload "class="btn btn-link"/>
+    <div style="margin-top: 10px;">
+        <button type="button" class="btn btn-primary" onclick="firstFile()">上传第一个文件</button>
+        <button type="button" class="btn btn-success" onclick="allFile()">上传所有文件</button>
+        <button type="button" class="btn btn-info" onclick="cancelFirst()">取消第一个上传</button>
+        <button type="button" class="btn btn-warning" onclick="canceAll()">取消所有上传</button>
+
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#file_upload").uploadify({
+                //指定swf文件
+                'swf': '@Url.Content("~/Content/uploadify/uploadify.swf")',
+                //后台处理的页面
+                'uploader': '/Uploadify/Upload',
+                //按钮显示的文字
+                'buttonText': '上传图片',
+                //显示的高度和宽度，默认 height 30；width 120
+                //'height': 15,
+                //'width': 80,
+                //上传文件的类型  默认为所有文件    'All Files'  ;  '*.*'
+                //在浏览窗口底部的文件类型下拉菜单中显示的文本
+                'fileTypeDesc': 'Image Files',
+                //允许上传的文件后缀
+                'fileTypeExts': '*.gif; *.jpg; *.png',
+                //发送给后台的其他参数通过formData指定
+                //'formData': { 'someKey': 'someValue', 'someOtherKey': 1 },
+                //上传文件页面中，你想要用来作为文件队列的元素的id, 默认为false  自动生成,  不带#
+                //'queueID': 'fileQueue',
+                //选择文件后自动上传
+                'auto': false,
+                //设置为true将允许多文件上传
+                'multi': true,
+                //上传完成后执行
+                'onUploadSuccess': function(file, data, response) {
+                    var a = jQuery.parseJSON(data);
+                    if (a.Success) {
+                        // $.dialog.alert(a.Message);
+                    } else {
+                        // $.dialog.alert("导入提单成本费用异常：" + a.Message);
+                    }
+                },
+                //onUploadComplete:单个文件上传完成时触发事件
+                'onUploadComplete': function(file) {
+                    alert('The file ' + file.name + ' finished processing.');
+                },
+                //onQueueComplete：队列中全部文件上传完成时触发事件。
+                'onQueueComplete': function(queueData) {
+                    alert(queueData.uploadsSuccessful + ' files were successfully uploaded.');
+                }
+
+            });
+        });
+
+        //上传第一个
+        var firstFile = function() {
+            $('#file_upload').uploadify('upload');
+        };
+
+        //上传所有
+        var allFile = function() {
+            $('#file_upload').uploadify('upload', '*');
+        };
+
+        //取消第一个
+        var cancelFirst = function() {
+            $('#file_upload').uploadify('cancel');
+        };
+
+        //取消所有
+        var canceAll = function() {
+            $('#file_upload').uploadify('cancel', '*');
+        };
+
+    </script>
+}
