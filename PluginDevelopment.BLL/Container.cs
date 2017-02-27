@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Autofac;
 
 namespace PluginDevelopment.BLL
@@ -29,9 +25,9 @@ namespace PluginDevelopment.BLL
                     Initialise();
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                throw new System.Exception("IOC实例化出错!" + ex.Message);
+                throw new Exception("IOC实例化出错!" + ex.Message);
             }
 
             return _container.Resolve<T>();

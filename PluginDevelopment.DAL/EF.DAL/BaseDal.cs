@@ -1,21 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PluginDevelopment.DAL.EF.DAL
 {
     public class BaseDal<T> where T : class, new()
     {
         private readonly DbContext _dbContext = DbContextFactory.Create();
+
         public void Add(T t)
         {
             _dbContext.Set<T>().Add(t);
         }
+
         public void Delete(T t)
         {
             _dbContext.Set<T>().Remove(t);

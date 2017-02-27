@@ -3,7 +3,7 @@ using PluginDevelopment.Model;
 
 namespace PluginDevelopment.DAL.EF.IDAL
 {
-    public partial interface IUserDal : IBaseDal<user>
+    public interface IUserDal : IBaseDal<user>
     {
     }
 }

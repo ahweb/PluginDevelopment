@@ -8,7 +8,7 @@ using PluginDevelopment.Model;
 
 namespace PluginDevelopment.DAL.EF.DAL
 {
-    public partial class UserDal : BaseDal<user>,IUserDal
+    public class UserDal : BaseDal<user>,IUserDal
     {
     }
 }
