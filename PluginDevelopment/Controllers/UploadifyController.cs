@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using PluginDevelopment.BLL;
 using PluginDevelopment.DAL.DapperDal;
+using PluginDevelopment.Helper.RabbitMQ;
 using PluginDevelopment.Model;
 
 namespace PluginDevelopment.Controllers
@@ -16,7 +17,8 @@ namespace PluginDevelopment.Controllers
         // GET: Uploadify
         public ActionResult Index()
         {
-            List<user> list = _userService.GetModels(p => true).ToList();
+            //List<user> list = _userService.GetModels(p => true).ToList();
+            var liset = RabbitMqServer.RabbitMq();
             //DapperMethod.MappingDouble();
             return View();
         }

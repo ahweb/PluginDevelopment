@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using PluginDevelopment.DAL.EF.DAL;
 using PluginDevelopment.DAL.EF.IDAL;
 
 namespace PluginDevelopment.BLL
 {
     public abstract  class BaseService<T> where T : class, new()
     {
-        public BaseService()
+        protected BaseService()
         {
             SetDal();
         }

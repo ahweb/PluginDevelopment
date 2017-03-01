@@ -6,7 +6,7 @@ namespace PluginDevelopment.Helper.OAuth
 {
     public class OpenRefreshTokenProvider : AuthenticationTokenProvider
     {
-        private static ConcurrentDictionary<string, string> _refreshTokens = new ConcurrentDictionary<string, string>();
+        private static readonly ConcurrentDictionary<string, string> RefreshTokens = new ConcurrentDictionary<string, string>();
 
         /// <summary>
         /// 生成 refresh_token
@@ -17,7 +17,7 @@ namespace PluginDevelopment.Helper.OAuth
             context.Ticket.Properties.ExpiresUtc = DateTime.UtcNow.AddDays(60);
 
             context.SetToken(Guid.NewGuid().ToString("n") + Guid.NewGuid().ToString("n"));
-            _refreshTokens[context.Token] = context.SerializeTicket();
+            RefreshTokens[context.Token] = context.SerializeTicket();
         }
 
 
@@ -27,7 +27,7 @@ namespace PluginDevelopment.Helper.OAuth
         public override void Receive(AuthenticationTokenReceiveContext context)
         {
             string value;
-            if (_refreshTokens.TryRemove(context.Token, out value))
+            if (RefreshTokens.TryRemove(context.Token, out value))
             {
                 context.DeserializeTicket(value);
             }
